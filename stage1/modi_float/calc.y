@@ -15,8 +15,8 @@ extern int yylex();
 }
 %token <i> NUM
 %type <i> E 
-%left '+'
-%left '*'
+%left '+' '-'
+%left '*' '/'
 %%
   
    input:
@@ -28,8 +28,11 @@ extern int yylex();
     ;
 
    E: E '+' E {$$=$1+$3;}
+    | E '-' E {$$=$1-$3;}
     | E '*' E {$$=$1*$3;}
+    | E '/' E {$$=$1/$3;}
     | '(' E ')'{$$=$2;}
+    | '-' E {$$=-$2;}
     | NUM  {$$=$1;}
     ;
 
