@@ -8,10 +8,11 @@
 
 %%
 
-[0-9]+  {yylval.i = atoi(yytext); return NUM;}
+[0-9]+\.[0-9]+  {yylval.i = atof(yytext); return NUM;}
+[0-9]+          {yylval.i = atof(yytext); return NUM;}
 [+()*\n]  {return yytext[0];}
 [\t\f\v ] ;
-.           ;
+.          {yyerror("syntax error\n");} 
 
 %%
 int yywrap(void){return 1;}

@@ -11,7 +11,7 @@ void yyerror(char *msg);
 extern int yylex();
 %}
 %union {
-    int i;       
+    float i;       
 }
 %token <i> NUM
 %type <i> E 
@@ -24,7 +24,7 @@ extern int yylex();
     | input '\n'   {exit(1);}
     ;
   
-   S: E '\n'{printf("%d\n",$1);} 
+   S: E '\n'{printf("%f\n",$1);} 
     ;
 
    E: E '+' E {$$=$1+$3;}
