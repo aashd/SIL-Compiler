@@ -38,7 +38,16 @@ void yyerror(char* msg);
         | E '*' E  {$$=$1*$3;}
         | '(' E ')' {$$=$2;}
         | NUM  {$$=$1;}
-        | ID   {$$=sym_tab[char_int($1)];}
+        | ID   {
+                int j;
+                j=sym_tab[char_int($1)];
+                if(j>=0){
+                    $$=j;
+                }
+                else{
+                    yyerror("Uninitialised variable");
+                }
+                }
         ;
 %%
 void yyerror(char *msg){
@@ -46,6 +55,10 @@ void yyerror(char *msg){
     exit(1);
 }
 int main(){
+    int i;
+    for(i=0;i<26;i++){
+        sym_tab[i]=-1; 
+    }
     yyparse();
     return 0;
 }
