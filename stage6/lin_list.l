@@ -3,6 +3,7 @@
 #include<stdlib.h>
 #include<string.h>
 #include "y.tab.h"
+char*  dyna_copy(char* a);
 %}
 %%
 "if"    {return IF;}
@@ -19,8 +20,8 @@
 "exit"  {return EXIT;}
 "read" {return READ;}
 "=="   {return EQ;}
-[0-9]+  {yylval.i=atoi(yytext);return NUM;}
-[a-z]+   {yylval.j=yytext;return ID;}
+[0-9]+  {yylval.i=atoi(yytext);printf("in lex %s",yytext);return NUM;}
+[a-z]+   {yylval.j=dyna_copy(yytext);printf("in lex %s\n",yytext);return ID;}
 [+*><\n();=] {return yytext[0]; }
 [\t ]    {;}
 .  {yyerror("lexical error");}
