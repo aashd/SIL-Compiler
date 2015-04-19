@@ -94,23 +94,23 @@ int evaluate(node* i,FILE* fp){
         case write_type:
             x=evaluate(i->pt1,fp);
             fprintf(fp, "OUT R%d\n",x);
-            free_reg(-1);
+            free_reg(x-1);
             return 0;
             //printf("%d\n",evaluate(i->pt1,fp));
             break;
         case read_type:
             x=char_int((i->pt1)->ch);
             y=assign_reg();
-            fprintf(fp, "IN R%d\n",x);
+            fprintf(fp, "IN R%d\n",y);
             fprintf(fp, "MOV [%d], R%d\n",x,y);
-            free_reg(-1);
+            free_reg(y-1);
             return 0;
             break;
         case assign_type:
             x=char_int((i->pt1)->ch);
             y=evaluate(i->pt2,fp);
             fprintf(fp, "MOV [%d], R%d\n",x,y);
-            free_reg(-1);
+            free_reg(y-1);
             //sym_tab[char_int((i->pt1)->ch)]=evaluate(i->pt2,fp);
             return 0;
             break;
@@ -124,7 +124,7 @@ int evaluate(node* i,FILE* fp){
             fprintf(fp, " L%d:\n",y);
             evaluate(i->pt3,fp);//else
             fprintf(fp, " L%d:\n",z);
-            free_reg(-1);    
+            free_reg(x-1);    
             return 0;
             //if(evaluate(i->pt1,fp)){
 
@@ -142,10 +142,10 @@ int evaluate(node* i,FILE* fp){
             x=evaluate(i->pt1,fp);//expr
             fprintf(fp, "JZ R%d, L%d\n",x,z);
             evaluate(i->pt2,fp);//block
-            free_reg(x);
+            free_reg(x-1);
             fprintf(fp, "JMP L%d\n",y);
             fprintf(fp, "L%d:\n",z);
-            free_reg(-1);
+            free_reg(x-1);
             //while(evaluate(i->pt1,fp)){
             //    evaluate(i->pt2,fp);
             //}
@@ -167,7 +167,7 @@ int assign_reg()
     regact=regact+1;
     return regact;
 }
-int free_reg(int y)
+int free_reg(int y)//always free 1 less
 {
     regact=y;
     return 0;
