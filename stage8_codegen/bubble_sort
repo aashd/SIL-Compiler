@@ -1,0 +1,29 @@
+decl
+    int a[5],i,j,min,temp;
+enddecl
+i=0;
+while(i<5)do
+    read(a[i]);
+    i=i+1;
+endwhile;
+i=0;
+while(i<5)do
+    min=i;
+    j=i;
+    while(j<5)do
+        if(a[j]<a[min])then
+            min=j;
+        endif;
+        j=j+1;
+    endwhile;
+    temp=a[min];
+    a[min]=a[i];
+    a[i]=temp;
+    i=i+1;
+endwhile;
+i=0;
+while(i<5)do
+    print(a[i]);
+    i=i+1;
+endwhile;
+exit
