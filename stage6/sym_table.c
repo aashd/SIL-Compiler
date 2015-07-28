@@ -1,19 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <stddef.h>
-typedef struct gsymt_node {
-    char* name;
-    int type;//for type checking
-    int size;//for arrays
-    int* bind;//?
-    struct gsymt_node* next;
-}gsymbol;
-gsymbol* make_syt_entry(char* name,int type,int size,int* bind,gsymbol* next);
-int* allocate_mem(int size);
-gsymbol* search(char* var_name, gsymbol* head);
-gsymbol* search1(char* var_name, gsymbol* sym);
-int add_sym(char* name, int type, int size,int * bind,gsymbol* head);
-
+#include "y.tab.h"
+#include "sym_table.h"
 gsymbol* make_syt_entry(char* name,int type,int size,int* bind,gsymbol* next)
 {
     gsymbol* i;
@@ -29,7 +15,7 @@ int* allocate_mem(int size){
     i=(int* )malloc(sizeof(int)*size);
     return i;
 }
-gsymbol* search(char* var_name, gsymbol* head){
+gsymbol* search(char* var_name){
     if (head->next==NULL) {
         //printf("symtable empty\n");
         return NULL;
@@ -55,8 +41,8 @@ gsymbol* search1(char* var_name, gsymbol* sym){
         }
     }
 }
-int add_sym(char* name, int type, int size,int * bind,gsymbol* head){
-    if (search(name, head)!=NULL) {
+int add_sym(char* name, int type, int size,int * bind){
+    if (search(name)!=NULL) {
         printf("ERROR: Variable already declared\n");
         return 0;
     }

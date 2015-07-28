@@ -31,5 +31,5 @@ typedef struct tnode{
     gsymbol* g_sym_tab;//pointer to head node of glob sym table
 }node;
 node* make_node(int type,node* pt1,node* pt2, node* pt3, gsymbol* gst,char* a , int num_val);
-int evaluate(node* i,gsymbol* head);
+int evaluate(node* i);
 char* dyna_copy(char* a);

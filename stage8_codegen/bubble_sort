@@ -1,7 +1,9 @@
 decl
     int a[5],i,j,min,temp;
+    bool d,b;
 enddecl
 i=0;
+d=TRUE;
 while(i<5)do
     read(a[i]);
     i=i+1;
@@ -14,7 +16,7 @@ while(i<5)do
         if(a[j]<a[min])then
             min=j;
         endif;
-        j=j+1;
+        j=d+1;
     endwhile;
     temp=a[min];
     a[min]=a[i];

@@ -124,12 +124,22 @@ int type_id(char* a, gsymbol* head);
         |IF '(' E ')' THEN  block ELSE  block  ENDIF ';'    {$$=make_node(if_type,$3,$6,$8,head," ",-1);} 
         |WHILE '(' E ')' DO  block ENDWHILE ';'      {$$=make_node(while_type,$3,$6,NULL,head," ",-1);}
         |READ '(' ID ')' ';'                            {
-                                                            node* j;
-                                                            j=make_node(id_type,NULL,NULL,NULL,head,$3,-1);
-                                                            $$=make_node(read_type,j,NULL,NULL,head," ",-1);
+                                                            if(type_id($3,head)==1){
+                                                                node* j;
+                                                                j=make_node(id_type,NULL,NULL,NULL,head,$3,-1);
+                                                                $$=make_node(read_type,j,NULL,NULL,head," ",-1);
+                                                            }
+                                                            else{
+                                                                yyerror("Read only for int type");
+                                                            }
                                                         }
         |PRINT '(' E  ')'  ';'                          {
-                                                            $$=make_node(write_type,$3,NULL,NULL,head," ",-1);
+                                                            if(type_id($3,head)==1){
+                                                                $$=make_node(write_type,$3,NULL,NULL,head," ",-1);
+                                                            }
+                                                            else{
+                                                                yyerror("Read only for int type");
+                                                            }
                                                             
                                                         }
         |ID '=' E ';'                                   {   

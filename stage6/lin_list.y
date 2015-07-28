@@ -30,7 +30,7 @@ void yyerror(char* msg);
 %%
 
     prog:
-        |DECL  decl_list ENDDECL  block  EXIT  {evaluate($2,head);evaluate($4,head);}
+        |DECL  decl_list ENDDECL  block  EXIT  {evaluate($2);evaluate($4);}
         |prog block EXIT {evaluate($2,head);}
         ;
 
